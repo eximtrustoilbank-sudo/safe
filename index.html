@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAFE — Secured Assets Fund for Everyone</title>
-    <meta name="description" content="SAFE is the first insurance token on Solana. Earn yield while your assets are protected.">
-    <!-- Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title id="page-title">SAFE — Secured Assets Fund for Everyone</title>
+    <meta name="description" id="page-desc" content="SAFE is the first insurance token on Solana. Earn yield while your assets are protected." />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
     <style>
         /* ——— RESET ——— */
         * {
@@ -14,7 +13,6 @@
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
             font-family: 'Inter', sans-serif;
             background: #0b0e1a;
@@ -22,19 +20,17 @@
             line-height: 1.6;
             overflow-x: hidden;
         }
-
         a {
             color: #00e5ff;
             text-decoration: none;
         }
-
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 24px;
         }
 
-        /* ——— GLOW & BG ——— */
+        /* ——— GLOW ——— */
         .glow {
             position: fixed;
             border-radius: 50%;
@@ -43,7 +39,6 @@
             pointer-events: none;
             z-index: 0;
         }
-
         .glow-1 {
             width: 500px;
             height: 500px;
@@ -51,7 +46,6 @@
             top: -100px;
             left: -100px;
         }
-
         .glow-2 {
             width: 600px;
             height: 600px;
@@ -63,13 +57,12 @@
         /* ——— HEADER ——— */
         header {
             position: relative;
-            z-index: 2;
-            padding: 24px 0;
+            z-index: 10;
+            padding: 20px 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(12px);
             background: rgba(11, 14, 26, 0.6);
         }
-
         .header-inner {
             display: flex;
             justify-content: space-between;
@@ -77,7 +70,6 @@
             flex-wrap: wrap;
             gap: 16px;
         }
-
         .logo {
             display: flex;
             align-items: center;
@@ -86,48 +78,104 @@
             font-size: 24px;
             letter-spacing: -0.5px;
         }
-
         .logo img {
             height: 40px;
             width: auto;
             border-radius: 12px;
         }
-
         .logo span {
             background: linear-gradient(135deg, #14f195, #9945ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-
         .nav-links {
             display: flex;
             align-items: center;
-            gap: 28px;
+            gap: 20px;
             font-weight: 600;
-            font-size: 15px;
+            font-size: 14px;
+            flex-wrap: wrap;
         }
-
         .nav-links a {
             color: #b0b8d1;
-            transition: color 0.2s;
+            transition: 0.2s;
         }
-
         .nav-links a:hover {
             color: #fff;
         }
-
-        .btn-outline {
-            border: 1px solid #9945ff;
-            padding: 8px 20px;
+        .nav-links .btn-trade {
+            background: linear-gradient(135deg, #9945ff, #14f195);
+            color: #0b0e1a !important;
+            padding: 8px 24px;
             border-radius: 40px;
-            color: #fff !important;
-            background: rgba(153, 69, 255, 0.08);
+            font-weight: 700;
             transition: 0.2s;
         }
+        .nav-links .btn-trade:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(153, 69, 255, 0.3);
+        }
 
-        .btn-outline:hover {
-            background: #9945ff;
-            color: #fff !important;
+        /* ——— LANGUAGE SWITCHER ——— */
+        .lang-switcher {
+            position: relative;
+            display: inline-block;
+        }
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #eef2f8;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 13px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .lang-btn:hover {
+            background: rgba(153, 69, 255, 0.15);
+            border-color: #9945ff;
+        }
+        .lang-dropdown {
+            position: absolute;
+            top: 120%;
+            right: 0;
+            background: rgba(11, 14, 26, 0.97);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            padding: 8px 0;
+            min-width: 140px;
+            display: none;
+            z-index: 999;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+        }
+        .lang-dropdown.show {
+            display: block;
+        }
+        .lang-dropdown button {
+            background: none;
+            border: none;
+            color: #b0b8d1;
+            padding: 8px 20px;
+            width: 100%;
+            text-align: left;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.1s;
+            font-family: inherit;
+        }
+        .lang-dropdown button:hover {
+            background: rgba(153, 69, 255, 0.08);
+            color: #fff;
+        }
+        .lang-dropdown button.active {
+            color: #14f195;
+            font-weight: 700;
         }
 
         /* ——— HERO ——— */
@@ -137,7 +185,6 @@
             padding: 80px 0 60px;
             text-align: center;
         }
-
         .hero h1 {
             font-size: clamp(2.6rem, 10vw, 5rem);
             font-weight: 900;
@@ -146,27 +193,23 @@
             max-width: 900px;
             margin: 0 auto 20px;
         }
-
         .hero h1 .highlight {
             background: linear-gradient(135deg, #14f195, #9945ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-
         .hero p {
             font-size: 1.25rem;
             color: #b0b8d1;
             max-width: 640px;
             margin: 0 auto 40px;
         }
-
         .hero-buttons {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             gap: 16px;
         }
-
         .btn-primary {
             background: linear-gradient(135deg, #9945ff, #14f195);
             color: #0b0e1a !important;
@@ -174,17 +217,15 @@
             padding: 14px 40px;
             border-radius: 60px;
             font-size: 16px;
-            transition: transform 0.15s, box-shadow 0.2s;
+            transition: 0.15s;
             display: inline-block;
             border: none;
             cursor: pointer;
         }
-
         .btn-primary:hover {
             transform: scale(1.02);
             box-shadow: 0 0 30px rgba(153, 69, 255, 0.4);
         }
-
         .btn-secondary {
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.12);
@@ -196,7 +237,6 @@
             transition: 0.2s;
             display: inline-block;
         }
-
         .btn-secondary:hover {
             background: rgba(255, 255, 255, 0.08);
             border-color: #9945ff;
@@ -214,11 +254,9 @@
             border-top: 1px solid rgba(255, 255, 255, 0.04);
             border-bottom: 1px solid rgba(255, 255, 255, 0.04);
         }
-
         .stat-item {
             text-align: center;
         }
-
         .stat-item .number {
             font-size: 2.2rem;
             font-weight: 800;
@@ -226,7 +264,6 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-
         .stat-item .label {
             font-size: 0.95rem;
             color: #8892b0;
@@ -238,27 +275,23 @@
             z-index: 2;
             padding: 80px 0;
         }
-
         .features h2 {
             text-align: center;
             font-size: 2.4rem;
             font-weight: 800;
             margin-bottom: 16px;
         }
-
         .features .sub {
             text-align: center;
             color: #8892b0;
             max-width: 500px;
             margin: 0 auto 56px;
         }
-
         .grid-3 {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 30px;
         }
-
         .feature-card {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.06);
@@ -267,23 +300,19 @@
             transition: 0.25s;
             backdrop-filter: blur(4px);
         }
-
         .feature-card:hover {
             border-color: #9945ff;
             transform: translateY(-4px);
             background: rgba(153, 69, 255, 0.06);
         }
-
         .feature-card .icon {
             font-size: 2.4rem;
             margin-bottom: 12px;
         }
-
         .feature-card h3 {
             font-size: 1.2rem;
             margin-bottom: 8px;
         }
-
         .feature-card p {
             color: #b0b8d1;
             font-size: 0.95rem;
@@ -297,20 +326,17 @@
             background: rgba(255, 255, 255, 0.015);
             border-radius: 40px;
         }
-
         .tokenomics h2 {
             text-align: center;
             font-size: 2.4rem;
             font-weight: 800;
             margin-bottom: 48px;
         }
-
         .token-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
             gap: 16px;
         }
-
         .token-item {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.06);
@@ -318,13 +344,11 @@
             border-radius: 16px;
             text-align: center;
         }
-
         .token-item .pct {
             font-size: 1.8rem;
             font-weight: 800;
             color: #14f195;
         }
-
         .token-item .desc {
             font-size: 0.9rem;
             color: #8892b0;
@@ -341,42 +365,41 @@
             color: #8892b0;
             font-size: 0.9rem;
         }
-
-        footer a {
-            color: #b0b8d1;
-        }
-
         footer .socials {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 16px;
             margin-bottom: 16px;
+            flex-wrap: wrap;
         }
-
         footer .socials a {
-            font-size: 1.2rem;
-            padding: 8px 16px;
+            padding: 8px 18px;
             border-radius: 40px;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.06);
+            color: #b0b8d1;
+            font-size: 14px;
             transition: 0.2s;
         }
-
         footer .socials a:hover {
             border-color: #9945ff;
             color: #fff;
         }
-
         .contract {
             background: rgba(255, 255, 255, 0.04);
             padding: 12px 20px;
             border-radius: 60px;
             display: inline-block;
             font-family: monospace;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             word-break: break-all;
             border: 1px solid rgba(255, 255, 255, 0.06);
             max-width: 100%;
+        }
+        footer .copy {
+            margin-top: 12px;
+            font-size: 0.75rem;
+            color: #5a6488;
         }
 
         /* ——— RESPONSIVE ——— */
@@ -388,11 +411,15 @@
             }
             .nav-links {
                 justify-content: center;
-                flex-wrap: wrap;
-                gap: 12px;
+            }
+            .lang-switcher {
+                align-self: center;
             }
             .hero h1 {
                 font-size: 2.2rem;
+            }
+            .grid-3 {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -406,15 +433,28 @@
 <!-- HEADER -->
 <header>
     <div class="container header-inner">
-        <div class="logo">
-            <img src="https://raw.githubusercontent.com/eximtrustoilbank-sudo/safe/refs/heads/main/safe_logo.jpg" alt="SAFE logo">
+        <a href="index.html" class="logo">
+            <img src="https://raw.githubusercontent.com/eximtrustoilbank-sudo/safe/refs/heads/main/safe_logo.jpg" alt="SAFE" />
             <span>SAFE</span>
-        </div>
+        </a>
         <div class="nav-links">
-            <a href="#features">Features</a>
-            <a href="#tokenomics">Tokenomics</a>
-            <a href="https://pinksale.finance" target="_blank">Pinksale</a>
-            <a href="https://meteora.ag" target="_blank" class="btn-outline">Trade</a>
+            <a href="#features" data-i18n="nav-features">Features</a>
+            <a href="#tokenomics" data-i18n="nav-tokenomics">Tokenomics</a>
+            <a href="trade.html" class="btn-trade" data-i18n="nav-trade">Trade</a>
+            <!-- Language Switcher -->
+            <div class="lang-switcher">
+                <button class="lang-btn" id="langToggle">🌐 <span id="currentLangLabel">EN</span></button>
+                <div class="lang-dropdown" id="langDropdown">
+                    <button data-lang="en" class="active">🇬🇧 English</button>
+                    <button data-lang="ru">🇷🇺 Русский</button>
+                    <button data-lang="es">🇪🇸 Español</button>
+                    <button data-lang="fr">🇫🇷 Français</button>
+                    <button data-lang="de">🇩🇪 Deutsch</button>
+                    <button data-lang="zh">🇨🇳 中文</button>
+                    <button data-lang="ja">🇯🇵 日本語</button>
+                    <button data-lang="ko">🇰🇷 한국어</button>
+                </div>
+            </div>
         </div>
     </div>
 </header>
@@ -422,17 +462,17 @@
 <!-- HERO -->
 <section class="hero container">
     <h1>
-        Your crypto.<br>
-        <span class="highlight">Protected.</span> Your wallet.<br>
-        <span class="highlight">Earning.</span>
+        <span data-i18n="hero-line1">Your crypto.</span><br />
+        <span class="highlight" data-i18n="hero-line2">Protected.</span> <span data-i18n="hero-line3">Your wallet.</span><br />
+        <span class="highlight" data-i18n="hero-line4">Earning.</span>
     </h1>
-    <p>
-        SAFE is the first insurance token on Solana — earn yield from liquidity pools<br>
+    <p data-i18n="hero-desc">
+        SAFE is the first insurance token on Solana — earn yield from liquidity pools
         while your assets stay protected. No premiums. No lock-ups.
     </p>
     <div class="hero-buttons">
-        <a href="https://meteora.ag" target="_blank" class="btn-primary">Buy $SAFE</a>
-        <a href="#tokenomics" class="btn-secondary">Learn more</a>
+        <a href="trade.html" class="btn-primary" data-i18n="hero-buy">Buy $SAFE</a>
+        <a href="#tokenomics" class="btn-secondary" data-i18n="hero-learn">Learn more</a>
     </div>
 </section>
 
@@ -440,103 +480,465 @@
 <section class="container stats">
     <div class="stat-item">
         <div class="number">1B</div>
-        <div class="label">Total Supply</div>
+        <div class="label" data-i18n="stat-supply">Total Supply</div>
     </div>
     <div class="stat-item">
         <div class="number">1%</div>
-        <div class="label">Transfer Fee (to Insurance)</div>
+        <div class="label" data-i18n="stat-fee">Transfer Fee (to Insurance)</div>
     </div>
     <div class="stat-item">
         <div class="number">Solana</div>
-        <div class="label">Network</div>
+        <div class="label" data-i18n="stat-network">Network</div>
     </div>
     <div class="stat-item">
         <div class="number">🛡️</div>
-        <div class="label">Automated Protection</div>
+        <div class="label" data-i18n="stat-protection">Automated Protection</div>
     </div>
 </section>
 
 <!-- FEATURES -->
 <section class="features container" id="features">
-    <h2>Built for safety. Powered by DeFi.</h2>
-    <p class="sub">Every transaction contributes to your protection — automatically.</p>
+    <h2 data-i18n="features-title">Built for safety. Powered by DeFi.</h2>
+    <p class="sub" data-i18n="features-sub">Every transaction contributes to your protection — automatically.</p>
     <div class="grid-3">
         <div class="feature-card">
             <div class="icon">🔒</div>
-            <h3>Auto-Insurance</h3>
-            <p>1% of every transfer goes to the insurance fund. You never pay a premium.</p>
+            <h3 data-i18n="f1-title">Auto-Insurance</h3>
+            <p data-i18n="f1-desc">1% of every transfer goes to the insurance fund. You never pay a premium.</p>
         </div>
         <div class="feature-card">
             <div class="icon">💧</div>
-            <h3>Liquidity Yield</h3>
-            <p>Your SAFE tokens earn yield from liquidity pools while you hold them.</p>
+            <h3 data-i18n="f2-title">Liquidity Yield</h3>
+            <p data-i18n="f2-desc">Your SAFE tokens earn yield from liquidity pools while you hold them.</p>
         </div>
         <div class="feature-card">
             <div class="icon">⚡</div>
-            <h3>Solana Speed</h3>
-            <p>Transactions in <0.5 seconds with fees under $0.01 — fast and cheap.</p>
+            <h3 data-i18n="f3-title">Solana Speed</h3>
+            <p data-i18n="f3-desc">Transactions in &lt;0.5 seconds with fees under $0.01 — fast and cheap.</p>
         </div>
         <div class="feature-card">
             <div class="icon">👁️</div>
-            <h3>100% Transparent</h3>
-            <p>All reserves are on-chain. Anyone can verify the insurance fund anytime.</p>
+            <h3 data-i18n="f4-title">100% Transparent</h3>
+            <p data-i18n="f4-desc">All reserves are on-chain. Anyone can verify the insurance fund anytime.</p>
         </div>
         <div class="feature-card">
             <div class="icon">🔄</div>
-            <h3>No Lock-ups</h3>
-            <p>Your tokens are always liquid. No vesting, no surprise freezes.</p>
+            <h3 data-i18n="f5-title">No Lock-ups</h3>
+            <p data-i18n="f5-desc">Your tokens are always liquid. No vesting, no surprise freezes.</p>
         </div>
         <div class="feature-card">
             <div class="icon">🌐</div>
-            <h3>Built for Everyone</h3>
-            <p>From beginners to whales — SAFE protects every wallet equally.</p>
+            <h3 data-i18n="f6-title">Built for Everyone</h3>
+            <p data-i18n="f6-desc">From beginners to whales — SAFE protects every wallet equally.</p>
         </div>
     </div>
 </section>
 
 <!-- TOKENOMICS -->
 <section class="container tokenomics" id="tokenomics">
-    <h2>Tokenomics</h2>
+    <h2 data-i18n="toke-title">Tokenomics</h2>
     <div class="token-grid">
         <div class="token-item">
             <div class="pct">40%</div>
-            <div class="desc">Liquidity + Insurance Fund</div>
+            <div class="desc" data-i18n="toke-liq">Liquidity + Insurance Fund</div>
         </div>
         <div class="token-item">
             <div class="pct">25%</div>
-            <div class="desc">Community & Airdrops</div>
+            <div class="desc" data-i18n="toke-comm">Community & Airdrops</div>
         </div>
         <div class="token-item">
             <div class="pct">15%</div>
-            <div class="desc">Team (4-year lock)</div>
+            <div class="desc" data-i18n="toke-team">Team (4-year lock)</div>
         </div>
         <div class="token-item">
             <div class="pct">10%</div>
-            <div class="desc">Marketing</div>
+            <div class="desc" data-i18n="toke-mkt">Marketing</div>
         </div>
         <div class="token-item">
             <div class="pct">10%</div>
-            <div class="desc">Reserve</div>
+            <div class="desc" data-i18n="toke-res">Reserve</div>
         </div>
     </div>
 </section>
 
-<!-- CONTRACT & FOOTER -->
+<!-- FOOTER -->
 <footer>
     <div class="container">
         <div class="socials">
-            <a href="#" target="_blank">🐦 X</a>
+            <a href="#" target="_blank">🐦 X (Twitter)</a>
             <a href="#" target="_blank">💬 Telegram</a>
             <a href="#" target="_blank">📊 DexScreener</a>
         </div>
         <div class="contract">
             📜 5HudMVeZpwdcsajr75hTCipr9Yd8KJ9GfCowqU5T8GS
         </div>
-        <p style="margin-top: 20px; font-size: 0.8rem;">
+        <div class="copy">
             &copy; 2026 SAFE Protocol. Built on Solana. 🛡️
-        </p>
+        </div>
     </div>
 </footer>
+
+<script>
+    // ——— ЯЗЫКИ ———
+    const translations = {
+        en: {
+            'page-title': 'SAFE — Secured Assets Fund for Everyone',
+            'page-desc': 'SAFE is the first insurance token on Solana. Earn yield while your assets are protected.',
+            'nav-features': 'Features',
+            'nav-tokenomics': 'Tokenomics',
+            'nav-trade': 'Trade',
+            'hero-line1': 'Your crypto.',
+            'hero-line2': 'Protected.',
+            'hero-line3': 'Your wallet.',
+            'hero-line4': 'Earning.',
+            'hero-desc': 'SAFE is the first insurance token on Solana — earn yield from liquidity pools while your assets stay protected. No premiums. No lock-ups.',
+            'hero-buy': 'Buy $SAFE',
+            'hero-learn': 'Learn more',
+            'stat-supply': 'Total Supply',
+            'stat-fee': 'Transfer Fee (to Insurance)',
+            'stat-network': 'Network',
+            'stat-protection': 'Automated Protection',
+            'features-title': 'Built for safety. Powered by DeFi.',
+            'features-sub': 'Every transaction contributes to your protection — automatically.',
+            'f1-title': 'Auto-Insurance',
+            'f1-desc': '1% of every transfer goes to the insurance fund. You never pay a premium.',
+            'f2-title': 'Liquidity Yield',
+            'f2-desc': 'Your SAFE tokens earn yield from liquidity pools while you hold them.',
+            'f3-title': 'Solana Speed',
+            'f3-desc': 'Transactions in <0.5 seconds with fees under $0.01 — fast and cheap.',
+            'f4-title': '100% Transparent',
+            'f4-desc': 'All reserves are on-chain. Anyone can verify the insurance fund anytime.',
+            'f5-title': 'No Lock-ups',
+            'f5-desc': 'Your tokens are always liquid. No vesting, no surprise freezes.',
+            'f6-title': 'Built for Everyone',
+            'f6-desc': 'From beginners to whales — SAFE protects every wallet equally.',
+            'toke-title': 'Tokenomics',
+            'toke-liq': 'Liquidity + Insurance Fund',
+            'toke-comm': 'Community & Airdrops',
+            'toke-team': 'Team (4-year lock)',
+            'toke-mkt': 'Marketing',
+            'toke-res': 'Reserve'
+        },
+        ru: {
+            'page-title': 'SAFE — Защищённый фонд активов для каждого',
+            'page-desc': 'SAFE — первый страховой токен на Solana. Зарабатывайте доход, пока ваши активы защищены.',
+            'nav-features': 'Возможности',
+            'nav-tokenomics': 'Токеномика',
+            'nav-trade': 'Торговать',
+            'hero-line1': 'Ваша крипта.',
+            'hero-line2': 'Защищена.',
+            'hero-line3': 'Ваш кошелёк.',
+            'hero-line4': 'Зарабатывает.',
+            'hero-desc': 'SAFE — первый страховой токен на Solana. Зарабатывайте доход от пулов ликвидности, пока ваши активы под защитой. Без взносов. Без блокировок.',
+            'hero-buy': 'Купить $SAFE',
+            'hero-learn': 'Узнать больше',
+            'stat-supply': 'Общий запас',
+            'stat-fee': 'Комиссия за перевод (в страховку)',
+            'stat-network': 'Сеть',
+            'stat-protection': 'Автозащита',
+            'features-title': 'Создан для безопасности. Работает на DeFi.',
+            'features-sub': 'Каждая транзакция автоматически вносит вклад в вашу защиту.',
+            'f1-title': 'Авто-страховка',
+            'f1-desc': '1% каждого перевода уходит в страховой фонд. Вы никогда не платите взносы.',
+            'f2-title': 'Доход от ликвидности',
+            'f2-desc': 'Ваши токены SAFE приносят доход из пулов ликвидности, пока вы их держите.',
+            'f3-title': 'Скорость Solana',
+            'f3-desc': 'Транзакции за <0.5 секунды с комиссией <$0.01 — быстро и дёшево.',
+            'f4-title': '100% прозрачность',
+            'f4-desc': 'Все резервы в блокчейне. Любой может проверить фонд в любой момент.',
+            'f5-title': 'Без блокировок',
+            'f5-desc': 'Ваши токены всегда ликвидны. Никаких вестингов и заморозок.',
+            'f6-title': 'Для каждого',
+            'f6-desc': 'От новичков до китов — SAFE защищает все кошельки одинаково.',
+            'toke-title': 'Токеномика',
+            'toke-liq': 'Ликвидность + Страховой фонд',
+            'toke-comm': 'Сообщество и Airdrop\'ы',
+            'toke-team': 'Команда (блокировка 4 года)',
+            'toke-mkt': 'Маркетинг',
+            'toke-res': 'Резерв'
+        },
+        es: {
+            'page-title': 'SAFE — Fondo de activos asegurados para todos',
+            'page-desc': 'SAFE es el primer token de seguro en Solana. Gana rendimiento mientras tus activos están protegidos.',
+            'nav-features': 'Características',
+            'nav-tokenomics': 'Tokenómica',
+            'nav-trade': 'Comerciar',
+            'hero-line1': 'Tu cripto.',
+            'hero-line2': 'Protegida.',
+            'hero-line3': 'Tu cartera.',
+            'hero-line4': 'Ganando.',
+            'hero-desc': 'SAFE es el primer token de seguro en Solana — gana rendimiento de los pools de liquidez mientras tus activos están protegidos. Sin primas. Sin bloqueos.',
+            'hero-buy': 'Comprar $SAFE',
+            'hero-learn': 'Más información',
+            'stat-supply': 'Suministro total',
+            'stat-fee': 'Comisión de transferencia (al seguro)',
+            'stat-network': 'Red',
+            'stat-protection': 'Protección automática',
+            'features-title': 'Construido para la seguridad. Impulsado por DeFi.',
+            'features-sub': 'Cada transacción contribuye a tu protección automáticamente.',
+            'f1-title': 'Auto-seguro',
+            'f1-desc': 'El 1% de cada transferencia va al fondo de seguro. Nunca pagas una prima.',
+            'f2-title': 'Rendimiento de liquidez',
+            'f2-desc': 'Tus tokens SAFE generan rendimiento de los pools de liquidez mientras los mantienes.',
+            'f3-title': 'Velocidad Solana',
+            'f3-desc': 'Transacciones en <0.5 segundos con comisiones <$0.01 — rápido y barato.',
+            'f4-title': '100% transparente',
+            'f4-desc': 'Todas las reservas están en la cadena. Cualquiera puede verificar el fondo en cualquier momento.',
+            'f5-title': 'Sin bloqueos',
+            'f5-desc': 'Tus tokens siempre son líquidos. Sin vesting ni congelaciones sorpresa.',
+            'f6-title': 'Construido para todos',
+            'f6-desc': 'Desde principiantes hasta ballenas — SAFE protege todas las carteras por igual.',
+            'toke-title': 'Tokenómica',
+            'toke-liq': 'Liquidez + Fondo de seguro',
+            'toke-comm': 'Comunidad y Airdrops',
+            'toke-team': 'Equipo (bloqueo 4 años)',
+            'toke-mkt': 'Marketing',
+            'toke-res': 'Reserva'
+        },
+        fr: {
+            'page-title': 'SAFE — Fonds d\'actifs sécurisés pour tous',
+            'page-desc': 'SAFE est le premier token d\'assurance sur Solana. Gagnez des rendements pendant que vos actifs sont protégés.',
+            'nav-features': 'Fonctionnalités',
+            'nav-tokenomics': 'Tokenomique',
+            'nav-trade': 'Échanger',
+            'hero-line1': 'Votre crypto.',
+            'hero-line2': 'Protégée.',
+            'hero-line3': 'Votre portefeuille.',
+            'hero-line4': 'Gagne.',
+            'hero-desc': 'SAFE est le premier token d\'assurance sur Solana — gagnez des rendements des pools de liquidité pendant que vos actifs sont protégés. Sans primes. Sans blocages.',
+            'hero-buy': 'Acheter $SAFE',
+            'hero-learn': 'En savoir plus',
+            'stat-supply': 'Offre totale',
+            'stat-fee': 'Frais de transfert (à l\'assurance)',
+            'stat-network': 'Réseau',
+            'stat-protection': 'Protection automatique',
+            'features-title': 'Conçu pour la sécurité. Propulsé par DeFi.',
+            'features-sub': 'Chaque transaction contribue automatiquement à votre protection.',
+            'f1-title': 'Auto-assurance',
+            'f1-desc': '1% de chaque transfert va au fonds d\'assurance. Vous ne payez jamais de prime.',
+            'f2-title': 'Rendement de liquidité',
+            'f2-desc': 'Vos tokens SAFE génèrent des rendements des pools de liquidité pendant que vous les détenez.',
+            'f3-title': 'Vitesse Solana',
+            'f3-desc': 'Transactions en <0.5 secondes avec des frais <$0.01 — rapide et bon marché.',
+            'f4-title': '100% transparent',
+            'f4-desc': 'Toutes les réserves sont sur la chaîne. Tout le monde peut vérifier le fonds à tout moment.',
+            'f5-title': 'Sans blocage',
+            'f5-desc': 'Vos tokens sont toujours liquides. Pas de vesting ni de gel surprise.',
+            'f6-title': 'Conçu pour tous',
+            'f6-desc': 'Des débutants aux baleines — SAFE protège tous les portefeuilles également.',
+            'toke-title': 'Tokenomique',
+            'toke-liq': 'Liquidité + Fonds d\'assurance',
+            'toke-comm': 'Communauté et Airdrops',
+            'toke-team': 'Équipe (blocage 4 ans)',
+            'toke-mkt': 'Marketing',
+            'toke-res': 'Réserve'
+        },
+        de: {
+            'page-title': 'SAFE — Abgesicherter Vermögensfonds für alle',
+            'page-desc': 'SAFE ist der erste Versicherungs-Token auf Solana. Verdiene Erträge, während deine Vermögenswerte geschützt sind.',
+            'nav-features': 'Funktionen',
+            'nav-tokenomics': 'Tokenomics',
+            'nav-trade': 'Handeln',
+            'hero-line1': 'Deine Krypto.',
+            'hero-line2': 'Geschützt.',
+            'hero-line3': 'Deine Wallet.',
+            'hero-line4': 'Verdient.',
+            'hero-desc': 'SAFE ist der erste Versicherungs-Token auf Solana — verdiene Erträge aus Liquiditätspools, während deine Vermögenswerte geschützt sind. Keine Prämien. Keine Sperrfristen.',
+            'hero-buy': 'Kaufe $SAFE',
+            'hero-learn': 'Mehr erfahren',
+            'stat-supply': 'Gesamtangebot',
+            'stat-fee': 'Transaktionsgebühr (für Versicherung)',
+            'stat-network': 'Netzwerk',
+            'stat-protection': 'Automatisierter Schutz',
+            'features-title': 'Für Sicherheit gebaut. Angetrieben von DeFi.',
+            'features-sub': 'Jede Transaktion trägt automatisch zu deinem Schutz bei.',
+            'f1-title': 'Auto-Versicherung',
+            'f1-desc': '1% jeder Überweisung fließt in den Versicherungsfonds. Du zahlst nie eine Prämie.',
+            'f2-title': 'Liquiditätsertrag',
+            'f2-desc': 'Deine SAFE-Token erzielen Erträge aus Liquiditätspools, während du sie hältst.',
+            'f3-title': 'Solana-Geschwindigkeit',
+            'f3-desc': 'Transaktionen in <0,5 Sekunden mit Gebühren unter $0,01 — schnell und günstig.',
+            'f4-title': '100% transparent',
+            'f4-desc': 'Alle Reserven sind auf der Blockchain. Jeder kann den Fonds jederzeit überprüfen.',
+            'f5-title': 'Keine Sperrfristen',
+            'f5-desc': 'Deine Token sind immer liquide. Kein Vesting, keine Überraschungs-Freigaben.',
+            'f6-title': 'Für alle gebaut',
+            'f6-desc': 'Von Anfängern bis zu Walen — SAFE schützt alle Wallets gleichermaßen.',
+            'toke-title': 'Tokenomics',
+            'toke-liq': 'Liquidität + Versicherungsfonds',
+            'toke-comm': 'Community & Airdrops',
+            'toke-team': 'Team (4-Jahres-Sperre)',
+            'toke-mkt': 'Marketing',
+            'toke-res': 'Reserve'
+        },
+        zh: {
+            'page-title': 'SAFE — 面向所有人的安全资产基金',
+            'page-desc': 'SAFE 是 Solana 上首个保险代币。在保护资产的同时赚取收益。',
+            'nav-features': '功能',
+            'nav-tokenomics': '代币经济学',
+            'nav-trade': '交易',
+            'hero-line1': '您的加密资产。',
+            'hero-line2': '受到保护。',
+            'hero-line3': '您的钱包。',
+            'hero-line4': '正在赚取。',
+            'hero-desc': 'SAFE 是 Solana 上首个保险代币 — 在资产受到保护的同时，从流动性池中赚取收益。无保费。无锁仓。',
+            'hero-buy': '购买 $SAFE',
+            'hero-learn': '了解更多',
+            'stat-supply': '总供应量',
+            'stat-fee': '转账费用（用于保险）',
+            'stat-network': '网络',
+            'stat-protection': '自动保护',
+            'features-title': '为安全而生。由 DeFi 驱动。',
+            'features-sub': '每笔交易都会自动为您的保护做出贡献。',
+            'f1-title': '自动保险',
+            'f1-desc': '每笔转账的 1% 进入保险基金。您无需支付保费。',
+            'f2-title': '流动性收益',
+            'f2-desc': '您的 SAFE 代币在持有期间从流动性池中赚取收益。',
+            'f3-title': 'Solana 速度',
+            'f3-desc': '交易在 0.5 秒内完成，费用低于 $0.01 — 快速且便宜。',
+            'f4-title': '100% 透明',
+            'f4-desc': '所有储备都在链上。任何人都可以随时验证保险基金。',
+            'f5-title': '无锁仓',
+            'f5-desc': '您的代币始终保持流动性。无归属期，无意外冻结。',
+            'f6-title': '为所有人打造',
+            'f6-desc': '从新手到巨鲸 — SAFE 平等保护每个钱包。',
+            'toke-title': '代币经济学',
+            'toke-liq': '流动性 + 保险基金',
+            'toke-comm': '社区和空投',
+            'toke-team': '团队（4 年锁仓）',
+            'toke-mkt': '市场营销',
+            'toke-res': '储备金'
+        },
+        ja: {
+            'page-title': 'SAFE — すべての人のための資産保護基金',
+            'page-desc': 'SAFE は Solana 初の保険トークンです。資産を保護しながら収益を得られます。',
+            'nav-features': '機能',
+            'nav-tokenomics': 'トークノミクス',
+            'nav-trade': '取引',
+            'hero-line1': 'あなたの暗号資産。',
+            'hero-line2': '保護されます。',
+            'hero-line3': 'あなたのウォレット。',
+            'hero-line4': '収益を生みます。',
+            'hero-desc': 'SAFE は Solana 初の保険トークン — 資産を保護しながら流動性プールから収益を得られます。保険料なし。ロックアップなし。',
+            'hero-buy': '$SAFE を購入',
+            'hero-learn': '詳細を見る',
+            'stat-supply': '総供給量',
+            'stat-fee': '転送手数料（保険へ）',
+            'stat-network': 'ネットワーク',
+            'stat-protection': '自動保護',
+            'features-title': '安全性のために構築。DeFi が駆動。',
+            'features-sub': 'すべての取引が自動的にあなたの保護に貢献します。',
+            'f1-title': 'オート保険',
+            'f1-desc': 'すべての転送の1%が保険基金に送られます。保険料を支払う必要はありません。',
+            'f2-title': '流動性収益',
+            'f2-desc': 'SAFE トークンは保有中に流動性プールから収益を生みます。',
+            'f3-title': 'Solana スピード',
+            'f3-desc': '取引は0.5秒未満、手数料は$0.01未満 — 高速で低コスト。',
+            'f4-title': '100% 透明性',
+            'f4-desc': 'すべての準備金はオンチェーンにあります。誰でもいつでも保険基金を検証できます。',
+            'f5-title': 'ロックアップなし',
+            'f5-desc': 'トークンは常に流動性があります。ベスティングや予期せぬ凍結はありません。',
+            'f6-title': 'すべての人のために',
+            'f6-desc': '初心者からクジラまで — SAFE はすべてのウォレットを平等に保護します。',
+            'toke-title': 'トークノミクス',
+            'toke-liq': '流動性 + 保険基金',
+            'toke-comm': 'コミュニティとエアドロップ',
+            'toke-team': 'チーム（4年ロック）',
+            'toke-mkt': 'マーケティング',
+            'toke-res': '準備金'
+        },
+        ko: {
+            'page-title': 'SAFE — 모두를 위한 보안 자산 펀드',
+            'page-desc': 'SAFE는 Solana 최초의 보험 토큰입니다. 자산을 보호하면서 수익을 얻으세요.',
+            'nav-features': '기능',
+            'nav-tokenomics': '토큰노믹스',
+            'nav-trade': '거래하기',
+            'hero-line1': '당신의 암호화폐.',
+            'hero-line2': '보호됩니다.',
+            'hero-line3': '당신의 지갑.',
+            'hero-line4': '수익을 냅니다.',
+            'hero-desc': 'SAFE는 Solana 최초의 보험 토큰입니다 — 자산이 보호되는 동안 유동성 풀에서 수익을 얻으세요. 보험료 없음. 잠금 없음.',
+            'hero-buy': '$SAFE 구매',
+            'hero-learn': '더 알아보기',
+            'stat-supply': '총 공급량',
+            'stat-fee': '전송 수수료 (보험으로)',
+            'stat-network': '네트워크',
+            'stat-protection': '자동 보호',
+            'features-title': '안전을 위해 구축. DeFi로 구동.',
+            'features-sub': '모든 거래가 자동으로 당신의 보호에 기여합니다.',
+            'f1-title': '자동 보험',
+            'f1-desc': '모든 전송의 1%가 보험 기금으로 들어갑니다. 보험료를 내지 않습니다.',
+            'f2-title': '유동성 수익',
+            'f2-desc': 'SAFE 토큰을 보유하는 동안 유동성 풀에서 수익을 얻습니다.',
+            'f3-title': 'Solana 속도',
+            'f3-desc': '0.5초 미만의 거래, 수수료 $0.01 미만 — 빠르고 저렴합니다.',
+            'f4-title': '100% 투명성',
+            'f4-desc': '모든 준비금은 온체인에 있습니다. 누구나 언제든지 보험 기금을 확인할 수 있습니다.',
+            'f5-title': '잠금 없음',
+            'f5-desc': '토큰은 항상 유동적입니다. 베스팅이나 예상치 못한 동결이 없습니다.',
+            'f6-title': '모두를 위해 구축',
+            'f6-desc': '초보자부터 고래까지 — SAFE는 모든 지갑을 동등하게 보호합니다.',
+            'toke-title': '토큰노믹스',
+            'toke-liq': '유동성 + 보험 기금',
+            'toke-comm': '커뮤니티 및 에어드랍',
+            'toke-team': '팀 (4년 잠금)',
+            'toke-mkt': '마케팅',
+            'toke-res': '준비금'
+        }
+    };
+
+    // ——— ЯЗЫКОВАЯ ЛОГИКА ———
+    let currentLang = localStorage.getItem('safeLang') || 'en';
+
+    function applyLanguage(lang) {
+        if (!translations[lang]) return;
+        const t = translations[lang];
+        document.documentElement.lang = lang;
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (t[key]) {
+                if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                    el.placeholder = t[key];
+                } else {
+                    el.textContent = t[key];
+                }
+            }
+        });
+        // Title & Description
+        if (t['page-title']) document.getElementById('page-title').textContent = t['page-title'];
+        if (t['page-desc']) document.getElementById('page-desc').content = t['page-desc'];
+        // Current lang label
+        document.getElementById('currentLangLabel').textContent = lang.toUpperCase();
+        // Update active button in dropdown
+        document.querySelectorAll('.lang-dropdown button').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.lang === lang);
+        });
+        localStorage.setItem('safeLang', lang);
+        currentLang = lang;
+    }
+
+    // ——— DROPDOWN TOGGLE ———
+    document.getElementById('langToggle').addEventListener('click', (e) => {
+        e.stopPropagation();
+        document.getElementById('langDropdown').classList.toggle('show');
+    });
+
+    document.addEventListener('click', () => {
+        document.getElementById('langDropdown').classList.remove('show');
+    });
+
+    document.querySelectorAll('.lang-dropdown button').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const lang = btn.dataset.lang;
+            applyLanguage(lang);
+            document.getElementById('langDropdown').classList.remove('show');
+        });
+    });
+
+    // ——— ПРИМЕНЯЕМ ЯЗЫК ПРИ ЗАГРУЗКЕ ———
+    applyLanguage(currentLang);
+</script>
 
 </body>
 </html>
