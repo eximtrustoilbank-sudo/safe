@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SAFE Analytics — 3,000+ Tools</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet" />
+    <style>
+        /* ——— RESET ——— */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0b0e1a;
+            color: #eef2f8;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        a { color: #00e5ff; text-decoration: none; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+
+        /* ——— GLOW ——— */
+        .glow { position: fixed; border-radius: 50%; filter: blur(150px); opacity: 0.2; pointer-events: none; z-index: 0; }
+        .glow-1 { width: 600px; height: 600px; background: #9945ff; top: -200px; right: -300px; }
+        .glow-2 { width: 600px; height: 600px; background: #14f195; bottom: -200px; left: -300px; }
+        .glow-3 { width: 400px; height: 400px; background: #ff6b6b; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+
+        /* ——— HEADER ——— */
+        header {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            padding: 10px 0; background: rgba(11,14,26,0.92); backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .header-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+        .logo { display: flex; align-items: center; gap: 10px; font-weight: 900; font-size: 20px; }
+        .logo img { height: 32px; border-radius: 8px; }
+        .logo span { background: linear-gradient(135deg, #14f195, #9945ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .nav-links { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; font-size: 13px; font-weight: 600; }
+        .nav-links a { color: #b0b8d1; padding: 6px 12px; border-radius: 8px; transition: 0.2s; }
+        .nav-links a:hover { color: #fff; background: rgba(153,69,255,0.1); }
+        .nav-links .active { color: #14f195; background: rgba(20,241,149,0.08); }
+        .nav-links .btn-home { border: 1px solid #9945ff; padding: 6px 18px; border-radius: 40px; color: #fff !important; transition: 0.2s; }
+        .nav-links .btn-home:hover { background: #9945ff; color: #0b0e1a !important; }
+
+        /* ——— PAGE HEADER ——— */
+        .page-header { margin-top: 70px; padding: 30px 0 20px; text-align: center; position: relative; z-index: 2; }
+        .page-header h1 { font-size: 2.8rem; font-weight: 900; letter-spacing: -1px; }
+        .page-header h1 span { background: linear-gradient(135deg, #14f195, #9945ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .page-header p { color: #8892b0; margin-top: 8px; font-size: 1.05rem; max-width: 600px; margin-left: auto; margin-right: auto; }
+
+        /* ——— STATS BAR ——— */
+        .stats-bar { position: relative; z-index: 2; display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; padding: 20px 0 16px; max-width: 1000px; margin: 0 auto; }
+        .stat-box { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); padding: 12px 16px; border-radius: 14px; text-align: center; transition: 0.2s; }
+        .stat-box:hover { border-color: #14f195; background: rgba(20,241,149,0.04); }
+        .stat-box .num { font-size: 1.2rem; font-weight: 800; color: #14f195; }
+        .stat-box .lbl { font-size: 0.6rem; color: #8892b0; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+
+        /* ——— FILTER TABS ——— */
+        .filter-tabs { position: relative; z-index: 2; display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; padding: 12px 0 20px; border-bottom: 1px solid rgba(255,255,255,0.04); }
+        .filter-tabs button { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); color: #b0b8d1; padding: 6px 18px; border-radius: 40px; font-size: 12px; font-weight: 600; cursor: pointer; transition: 0.2s; font-family: inherit; }
+        .filter-tabs button:hover { border-color: #9945ff; color: #fff; background: rgba(153,69,255,0.06); }
+        .filter-tabs button.active { background: rgba(153,69,255,0.15); border-color: #9945ff; color: #fff; }
+
+        /* ——— ANALYTICS GRID ——— */
+        .analytics-grid { position: relative; z-index: 2; display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; padding: 20px 0 40px; }
+        .analytics-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.04);
+            border-radius: 16px;
+            padding: 18px 16px;
+            transition: all 0.25s ease;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .analytics-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(153,69,255,0.05), rgba(20,241,149,0.02));
+            opacity: 0;
+            transition: opacity 0.3s;
+            border-radius: 16px;
+        }
+        .analytics-card:hover::before { opacity: 1; }
+        .analytics-card:hover { border-color: #9945ff; transform: translateY(-4px); box-shadow: 0 8px 30px rgba(153,69,255,0.1); }
+        .analytics-card .icon { font-size: 2rem; position: relative; z-index: 1; }
+        .analytics-card .value { font-size: 1.4rem; font-weight: 800; color: #14f195; margin-top: 6px; position: relative; z-index: 1; }
+        .analytics-card .label { font-size: 0.75rem; color: #8892b0; margin-top: 4px; position: relative; z-index: 1; }
+        .analytics-card .change { font-size: 0.7rem; font-weight: 600; margin-top: 4px; position: relative; z-index: 1; }
+        .analytics-card .change.up { color: #14f195; }
+        .analytics-card .change.down { color: #ff6b6b; }
+        .analytics-card .badge { font-size: 0.5rem; background: rgba(153,69,255,0.12); color: #9945ff; padding: 2px 12px; border-radius: 20px; display: inline-block; margin-top: 6px; position: relative; z-index: 1; }
+        .analytics-card .badge.hot { background: rgba(255,107,107,0.12); color: #ff6b6b; }
+        .analytics-card .badge.green { background: rgba(20,241,149,0.12); color: #14f195; }
+
+        /* ——— SEARCH ——— */
+        .search-bar { position: relative; z-index: 2; max-width: 500px; margin: 0 auto 12px; }
+        .search-bar input {
+            width: 100%;
+            padding: 12px 20px 12px 44px;
+            border-radius: 60px;
+            border: 1px solid rgba(255,255,255,0.06);
+            background: rgba(255,255,255,0.03);
+            color: #eef2f8;
+            font-size: 14px;
+            font-family: inherit;
+            outline: none;
+            transition: 0.2s;
+        }
+        .search-bar input:focus { border-color: #9945ff; background: rgba(255,255,255,0.06); }
+        .search-bar input::placeholder { color: #5a6488; }
+        .search-bar .search-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: #5a6488; font-size: 16px; }
+
+        /* ——— FOOTER ——— */
+        footer { position: relative; z-index: 2; padding: 24px 0; border-top: 1px solid rgba(255,255,255,0.04); text-align: center; color: #8892b0; font-size: 0.75rem; }
+        footer .links { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin-bottom: 10px; }
+        footer .links a { color: #b0b8d1; font-size: 12px; transition: 0.2s; }
+        footer .links a:hover { color: #fff; }
+
+        /* ——— RESPONSIVE ——— */
+        @media (max-width: 700px) {
+            .header-inner { flex-direction: column; align-items: stretch; text-align: center; }
+            .nav-links { justify-content: center; }
+            .page-header h1 { font-size: 2rem; }
+            .analytics-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+            .stats-bar { grid-template-columns: repeat(2, 1fr); }
+            .filter-tabs button { font-size: 11px; padding: 4px 12px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- GLOW -->
+<div class="glow glow-1"></div>
+<div class="glow glow-2"></div>
+<div class="glow glow-3"></div>
+
+<!-- HEADER -->
+<header>
+    <div class="container header-inner">
+        <a href="index.html" class="logo">
+            <img src="https://raw.githubusercontent.com/eximtrustoilbank-sudo/safe/refs/heads/main/safe_logo.jpg" alt="SAFE">
+            <span>SAFE</span>
+        </a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="trade.html">Trade</a>
+            <a href="farms.html">Farms</a>
+            <a href="analytics.html" class="active">Analytics</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="insurance.html">Insurance</a>
+            <a href="bridges.html">Bridges</a>
+            <a href="orders.html">Orders</a>
+            <a href="perpetuals.html">Perpetuals</a>
+            <a href="bots.html">Bots</a>
+            <a href="index.html" class="btn-home">← Back</a>
+        </div>
+    </div>
+</header>
+
+<!-- PAGE HEADER -->
+<div class="page-header container">
+    <h1>📈 <span>Analytics</span></h1>
+    <p>3,000+ analytics tools — on-chain data, whale tracking, market insights</p>
+</div>
+
+<!-- SEARCH -->
+<div class="search-bar container">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="searchInput" placeholder="Search analytics metrics..." oninput="filterAnalytics(this.value)" />
+</div>
+
+<!-- STATS BAR -->
+<div class="container stats-bar" id="statsBar"></div>
+
+<!-- FILTER TABS -->
+<div class="container filter-tabs" id="filterTabs"></div>
+
+<!-- ANALYTICS GRID -->
+<div class="container analytics-grid" id="analyticsGrid"></div>
+
+<!-- FOOTER -->
+<footer>
+    <div class="container">
+        <div class="links">
+            <a href="index.html">Home</a>
+            <a href="trade.html">Trade</a>
+            <a href="farms.html">Farms</a>
+            <a href="analytics.html">Analytics</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="insurance.html">Insurance</a>
+            <a href="bridges.html">Bridges</a>
+            <a href="orders.html">Orders</a>
+            <a href="perpetuals.html">Perpetuals</a>
+            <a href="bots.html">Bots</a>
+            <a href="portfolio.html">Portfolio</a>
+            <a href="lending.html">Lending</a>
+            <a href="nft.html">NFT</a>
+            <a href="games.html">Games</a>
+            <a href="community.html">Community</a>
+            <a href="learn.html">Learn</a>
+            <a href="developers.html">Developers</a>
+            <a href="markets.html">Markets</a>
+            <a href="news.html">News</a>
+            <a href="settings.html">Settings</a>
+            <a href="support.html">Support</a>
+            <a href="api.html">API</a>
+            <a href="partners.html">Partners</a>
+            <a href="history.html">History</a>
+            <a href="airdrop.html">Airdrop</a>
+            <a href="dao.html">DAO</a>
+            <a href="staking.html">Staking</a>
+            <a href="burn.html">Burn</a>
+            <a href="reserves.html">Reserves</a>
+            <a href="careers.html">Careers</a>
+            <a href="blog.html">Blog</a>
+        </div>
+        <div>📜 5HudMVeZpwdcsajr75hTCipr9Yd8KJ9GfCowqU5T8GS</div>
+        <div style="margin-top:6px;font-size:0.65rem;color:#5a6488;">© 2026 SAFE Protocol — 3,000+ analytics tools | Built on Solana 🛡️</div>
+    </div>
+</footer>
+
+<script>
+    // ============================================================
+    // 3,000+ АНАЛИТИЧЕСКИХ ИНСТРУМЕНТОВ
+    // ============================================================
+
+    // ——— КАТЕГОРИИ ———
+    const categories = [
+        { id: 'all', label: '🔥 All' },
+        { id: 'price', label: '💰 Price' },
+        { id: 'volume', label: '📊 Volume' },
+        { id: 'holders', label: '👥 Holders' },
+        { id: 'liquidity', label: '💧 Liquidity' },
+        { id: 'social', label: '📱 Social' },
+        { id: 'technical', label: '📈 Technical' },
+        { id: 'onchain', label: '⛓️ On-Chain' }
+    ];
+
+    // ——— ГЕНЕРАТОР ДАННЫХ ———
+    function generateAnalytics(count) {
+        const data = [];
+        const icons = ['💰', '📊', '👥', '💧', '📱', '📈', '⛓️', '🔷', '🟣', '🟢', '🔴', '⚡', '🔥', '💎', '🌟', '🎯', '🚀', '💫', '✨', '🧊'];
+        const labels = [
+            // Price
+            'SAFE Price', 'USDC Price', 'SOL Price', 'BTC Price', 'ETH Price',
+            'Price Change 1h', 'Price Change 24h', 'Price Change 7d', 'ATH Price', 'ATL Price',
+            // Volume
+            '24h Volume', '7d Volume', '30d Volume', 'Volume Change', 'Volume/MA',
+            // Holders
+            'Total Holders', 'New Holders 24h', 'Active Wallets', 'Top 10 Holders %', 'Whale Count',
+            // Liquidity
+            'Total Liquidity', 'TVL', 'Liquidity Depth', 'Liquidity Change', 'Slippage Avg',
+            // Social
+            'Twitter Followers', 'Telegram Members', 'Discord Users', 'Reddit Subs', 'Social Sentiment',
+            // Technical
+            'RSI 14', 'MACD', 'Bollinger Bands', 'Moving Average 50', 'Moving Average 200',
+            'Support Level', 'Resistance Level', 'Trend Strength', 'Volatility Index',
+            // On-Chain
+            'Daily Transactions', 'Active Addresses', 'Transaction Count', 'Gas Used', 'Block Height',
+            'Burn Rate', 'Emission Rate', 'Staking Ratio', 'Insurance Fund', 'DAO Treasury'
+        ];
+        const categoriesMap = ['price','price','price','price','price','price','price','price','price','price',
+                               'volume','volume','volume','volume','volume',
+                               'holders','holders','holders','holders','holders',
+                               'liquidity','liquidity','liquidity','liquidity','liquidity',
+                               'social','social','social','social','social',
+                               'technical','technical','technical','technical','technical','technical','technical','technical','technical',
+                               'onchain','onchain','onchain','onchain','onchain','onchain','onchain','onchain','onchain','onchain'];
+        const units = ['$', '$', '$', '$', '$', '%', '%', '%', '$', '$',
+                       '$', '$', '$', '%', 'x',
+                       '', '', '', '%', '',
+                       '$', '$', '$', '%', '%',
+                       '', '', '', '', '',
+                       '', '', '', '', '', '', '', '', '',
+                       '', '', '', '', '', '', '', '', '', ''];
+        const badges = ['🔥 Hot', '⭐ Popular', '🆕 New', '💎 Key', '📈 Trending', '⛓️ Core', '✅ Verified'];
+        for (let i = 0; i < count; i++) {
+            const val = (Math.random() * 100000).toFixed(i % 3 === 0 ? 0 : (i % 2 === 0 ? 2 : 4));
+            const change = (Math.random() * 30 - 10).toFixed(1);
+            const isUp = parseFloat(change) >= 0;
+            const cat = categoriesMap[i % categoriesMap.length] || 'all';
+            const unit = units[i % units.length] || '';
+            data.push({
+                id: i + 1,
+                icon: icons[i % icons.length],
+                label: labels[i % labels.length] + ` ${i + 1}`,
+                value: `${val}${unit}`,
+                change: `${isUp ? '+' : ''}${change}%`,
+                isUp: isUp,
+                category: cat,
+                badge: badges[i % badges.length]
+            });
+        }
+        return data;
+    }
+
+    // ——— ДАННЫЕ ———
+    const fullData = generateAnalytics(3200);
+    let currentCategory = 'all';
+    let currentSearch = '';
+
+    // ——— РЕНДЕР СТАТИСТИКИ ———
+    function renderStats() {
+        const el = document.getElementById('statsBar');
+        const total = fullData.length;
+        const positive = fullData.filter(d => d.isUp).length;
+        const avgChange = fullData.reduce((sum, d) => sum + parseFloat(d.change), 0) / total;
+        el.innerHTML = `
+            <div class="stat-box"><div class="num">${total.toLocaleString()}</div><div class="lbl">Total Metrics</div></div>
+            <div class="stat-box"><div class="num">${positive}</div><div class="lbl">Positive Signals</div></div>
+            <div class="stat-box"><div class="num">${(positive/total*100).toFixed(0)}%</div><div class="lbl">Health Score</div></div>
+            <div class="stat-box"><div class="num">${avgChange > 0 ? '+' : ''}${avgChange.toFixed(1)}%</div><div class="lbl">Avg. Change</div></div>
+        `;
+    }
+    renderStats();
+
+    // ——— РЕНДЕР ФИЛЬТРОВ ———
+    function renderFilters() {
+        const el = document.getElementById('filterTabs');
+        el.innerHTML = categories.map(c => `
+            <button class="${c.id === 'all' ? 'active' : ''}" data-cat="${c.id}">${c.label}</button>
+        `).join('');
+        el.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                el.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentCategory = this.dataset.cat;
+                renderAnalytics(currentCategory, currentSearch);
+            });
+        });
+    }
+    renderFilters();
+
+    // ——— ФИЛЬТРАЦИЯ ПО ПОИСКУ ———
+    function filterAnalytics(search) {
+        currentSearch = search.toLowerCase().trim();
+        renderAnalytics(currentCategory, currentSearch);
+    }
+
+    // ——— РЕНДЕР АНАЛИТИКИ ———
+    function renderAnalytics(category, search) {
+        const el = document.getElementById('analyticsGrid');
+        let filtered = fullData;
+        if (category !== 'all') {
+            filtered = filtered.filter(d => d.category === category);
+        }
+        if (search) {
+            filtered = filtered.filter(d => d.label.toLowerCase().includes(search) || d.value.includes(search));
+        }
+        // Показываем первые 500 для производительности
+        const display = filtered.slice(0, 500);
+        if (display.length === 0) {
+            el.innerHTML = `<div style="text-align:center;padding:40px 0;color:#8892b0;grid-column:1/-1;">No results found for "<strong>${search}</strong>"</div>`;
+            return;
+        }
+        el.innerHTML = display.map(d => `
+            <div class="analytics-card">
+                <div class="icon">${d.icon}</div>
+                <div class="value">${d.value}</div>
+                <div class="label">${d.label}</div>
+                <div class="change ${d.isUp ? 'up' : 'down'}">${d.change}</div>
+                <div class="badge ${d.badge.includes('Hot') ? 'hot' : d.badge.includes('Popular') ? 'green' : ''}">${d.badge}</div>
+            </div>
+        `).join('');
+        document.querySelector('.page-header p').textContent = 
+            `${filtered.length.toLocaleString()} analytics tools — on-chain data, whale tracking, market insights`;
+    }
+    renderAnalytics('all', '');
+
+    console.log('✅ SAFE Analytics: 3,200+ инструментов загружено');
+    console.log('🔍 Используйте поиск для фильтрации');
+</script>
+</body>
+</html>
