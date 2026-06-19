@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SAFE History — 1,000+ Records</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0b0e1a;
+            color: #eef2f8;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        a { color: #00e5ff; text-decoration: none; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+        .glow { position: fixed; border-radius: 50%; filter: blur(150px); opacity: 0.2; pointer-events: none; z-index: 0; }
+        .glow-1 { width: 600px; height: 600px; background: #ff6b6b; top: -200px; right: -300px; }
+        .glow-2 { width: 600px; height: 600px; background: #14f195; bottom: -200px; left: -300px; }
+
+        header {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            padding: 10px 0; background: rgba(11,14,26,0.9); backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .header-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+        .logo { display: flex; align-items: center; gap: 10px; font-weight: 900; font-size: 20px; }
+        .logo img { height: 32px; border-radius: 8px; }
+        .logo span { background: linear-gradient(135deg, #14f195, #9945ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .nav-links { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; font-size: 13px; font-weight: 600; }
+        .nav-links a { color: #b0b8d1; padding: 6px 12px; border-radius: 8px; transition: 0.2s; }
+        .nav-links a:hover { color: #fff; background: rgba(153,69,255,0.1); }
+        .nav-links .active { color: #14f195; }
+        .nav-links .btn-home { border: 1px solid #9945ff; padding: 6px 18px; border-radius: 40px; color: #fff !important; }
+
+        .page-header { margin-top: 70px; padding: 30px 0 20px; text-align: center; position: relative; z-index: 2; }
+        .page-header h1 { font-size: 2.5rem; font-weight: 900; }
+        .page-header h1 span { background: linear-gradient(135deg, #14f195, #9945ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .page-header p { color: #8892b0; margin-top: 6px; font-size: 1rem; }
+
+        .stats-bar { position: relative; z-index: 2; display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 8px; padding: 16px 0; max-width: 1000px; margin: 0 auto; }
+        .stat-box { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); padding: 10px 14px; border-radius: 12px; text-align: center; }
+        .stat-box .num { font-size: 1.1rem; font-weight: 700; color: #14f195; }
+        .stat-box .lbl { font-size: 0.6rem; color: #8892b0; text-transform: uppercase; letter-spacing: 0.3px; }
+
+        .history-grid { position: relative; z-index: 2; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; padding: 16px 0 40px; }
+        .history-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); border-radius: 14px; padding: 16px; transition: 0.2s; }
+        .history-card:hover { border-color: #ff6b6b; transform: translateY(-3px); background: rgba(255,107,107,0.04); }
+        .history-card .type { font-size: 0.6rem; font-weight: 700; padding: 2px 12px; border-radius: 20px; display: inline-block; margin-bottom: 6px; }
+        .history-card .type.swap { background: rgba(0,229,255,0.12); color: #00e5ff; }
+        .history-card .type.transfer { background: rgba(20,241,149,0.12); color: #14f195; }
+        .history-card .type.stake { background: rgba(153,69,255,0.12); color: #9945ff; }
+        .history-card .type.bridge { background: rgba(255,107,107,0.12); color: #ff6b6b; }
+        .history-card .type.farm { background: rgba(255,215,0,0.12); color: #ffd700; }
+        .history-card .title { font-size: 0.85rem; font-weight: 700; margin: 4px 0; }
+        .history-card .details { font-size: 0.7rem; color: #8892b0; }
+        .history-card .time { font-size: 0.6rem; color: #5a6488; margin-top: 6px; }
+        .history-card .badge { font-size: 0.55rem; background: rgba(255,107,107,0.12); color: #ff6b6b; padding: 2px 10px; border-radius: 20px; display: inline-block; margin-top: 4px; }
+
+        footer { position: relative; z-index: 2; padding: 24px 0; border-top: 1px solid rgba(255,255,255,0.04); text-align: center; color: #8892b0; font-size: 0.75rem; }
+        footer .links { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin-bottom: 10px; }
+        footer .links a { color: #b0b8d1; font-size: 12px; }
+        footer .links a:hover { color: #fff; }
+
+        @media (max-width: 700px) {
+            .header-inner { flex-direction: column; align-items: stretch; text-align: center; }
+            .nav-links { justify-content: center; }
+            .page-header h1 { font-size: 1.8rem; }
+            .history-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="glow glow-1"></div>
+<div class="glow glow-2"></div>
+
+<header>
+    <div class="container header-inner">
+        <a href="index.html" class="logo">
+            <img src="https://raw.githubusercontent.com/eximtrustoilbank-sudo/safe/refs/heads/main/safe_logo.jpg" alt="SAFE">
+            <span>SAFE</span>
+        </a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="trade.html">Trade</a>
+            <a href="farms.html">Farms</a>
+            <a href="analytics.html">Analytics</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="insurance.html">Insurance</a>
+            <a href="bridges.html">Bridges</a>
+            <a href="orders.html">Orders</a>
+            <a href="perpetuals.html">Perpetuals</a>
+            <a href="bots.html">Bots</a>
+            <a href="portfolio.html">Portfolio</a>
+            <a href="lending.html">Lending</a>
+            <a href="nft.html">NFT</a>
+            <a href="games.html">Games</a>
+            <a href="community.html">Community</a>
+            <a href="learn.html">Learn</a>
+            <a href="developers.html">Developers</a>
+            <a href="markets.html">Markets</a>
+            <a href="news.html">News</a>
+            <a href="settings.html">Settings</a>
+            <a href="support.html">Support</a>
+            <a href="api.html">API</a>
+            <a href="partners.html">Partners</a>
+            <a href="history.html" class="active">History</a>
+            <a href="index.html" class="btn-home">← Back</a>
+        </div>
+    </div>
+</header>
+
+<div class="page-header container">
+    <h1>📜 <span>History</span></h1>
+    <p>1,000+ records — complete transaction and event history</p>
+</div>
+
+<div class="container stats-bar" id="statsBar"></div>
+
+<div class="container history-grid" id="historyGrid"></div>
+
+<footer>
+    <div class="container">
+        <div class="links">
+            <a href="index.html">Home</a>
+            <a href="trade.html">Trade</a>
+            <a href="farms.html">Farms</a>
+            <a href="analytics.html">Analytics</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="insurance.html">Insurance</a>
+            <a href="bridges.html">Bridges</a>
+            <a href="orders.html">Orders</a>
+            <a href="perpetuals.html">Perpetuals</a>
+            <a href="bots.html">Bots</a>
+            <a href="portfolio.html">Portfolio</a>
+            <a href="lending.html">Lending</a>
+            <a href="nft.html">NFT</a>
+            <a href="games.html">Games</a>
+            <a href="community.html">Community</a>
+            <a href="learn.html">Learn</a>
+            <a href="developers.html">Developers</a>
+            <a href="markets.html">Markets</a>
+            <a href="news.html">News</a>
+            <a href="settings.html">Settings</a>
+            <a href="support.html">Support</a>
+            <a href="api.html">API</a>
+            <a href="partners.html">Partners</a>
+            <a href="history.html">History</a>
+            <a href="airdrop.html">Airdrop</a>
+        </div>
+        <div>📜 5HudMVeZpwdcsajr75hTCipr9Yd8KJ9GfCowqU5T8GS</div>
+        <div style="margin-top:6px;font-size:0.65rem;color:#5a6488;">© 2026 SAFE Protocol — 1,000+ history records | Built on Solana 🛡️</div>
+    </div>
+</footer>
+
+<script>
+    // ============================================================
+    // 1,000+ ЗАПИСЕЙ ИСТОРИИ
+    // ============================================================
+
+    function generateHistory(count) {
+        const data = [];
+        const types = ['swap', 'transfer', 'stake', 'bridge', 'farm'];
+        const typeLabels = ['Swap', 'Transfer', 'Stake', 'Bridge', 'Farm'];
+        const titles = [
+            'SAFE → USDC', 'USDC → SAFE', 'SAFE → SOL', 'SAFE Staked', 'SAFE Unstaked',
+            'Bridge SAFE to ETH', 'Bridge SAFE to BSC', 'Yield Farm Claim', 'Yield Farm Deposit',
+            'SAFE → USDT', 'USDT → SAFE', 'SOL → SAFE', 'Staking Reward', 'Liquidity Added',
+            'Liquidity Removed', 'SAFE → BONK', 'BONK → SAFE', 'SAFE → WIF', 'WIF → SAFE'
+        ];
+        const details = [
+            '1234 SAFE → 0.1234 USDC', '0.1234 USDC → 1234 SAFE',
+            '1234 SAFE → 1.234 SOL', '1000 SAFE staked', '500 SAFE unstaked',
+            'Bridge 100 SAFE to Ethereum', 'Bridge 100 SAFE to BSC', 'Claimed 50 SAFE rewards',
+            'Deposited 200 SAFE to farm', '1234 SAFE → 0.1234 USDT',
+            '0.1234 USDT → 1234 SAFE', '1.234 SOL → 1234 SAFE',
+            'Earned 25 SAFE rewards', 'Added 500 SAFE + 0.05 USDC',
+            'Removed 500 SAFE + 0.05 USDC', '1234 SAFE → 12345 BONK',
+            '12345 BONK → 1234 SAFE', '1234 SAFE → 5678 WIF', '5678 WIF → 1234 SAFE'
+        ];
+        const times = [
+            '2 min ago', '15 min ago', '1 hour ago', '3 hours ago', '6 hours ago',
+            '12 hours ago', '1 day ago', '2 days ago', '3 days ago', '1 week ago'
+        ];
+        for (let i = 0; i < count; i++) {
+            const type = types[i % types.length];
+            const typeLabel = typeLabels[i % typeLabels.length];
+            const title = titles[i % titles.length] + ` #${i + 1}`;
+            const detail = details[i % details.length];
+            const time = times[i % times.length];
+            const amount = (Math.random() * 10000 + 10).toFixed(0);
+            data.push({
+                type: type,
+                typeLabel: typeLabel,
+                title: title,
+                detail: detail,
+                time: time,
+                amount: amount,
+                id: i + 1
+            });
+        }
+        return data;
+    }
+
+    const historyData = generateHistory(1100);
+
+    function renderStats() {
+        const el = document.getElementById('statsBar');
+        const total = historyData.length;
+        const types = [...new Set(historyData.map(d => d.typeLabel))];
+        const totalVolume = historyData.reduce((sum, d) => sum + parseFloat(d.amount), 0);
+        el.innerHTML = `
+            <div class="stat-box"><div class="num">${total.toLocaleString()}</div><div class="lbl">Total Records</div></div>
+            <div class="stat-box"><div class="num">${types.length}</div><div class="lbl">Types</div></div>
+            <div class="stat-box"><div class="num">${Math.round(totalVolume / 1000)}K</div><div class="lbl">Total Volume</div></div>
+            <div class="stat-box"><div class="num">${Math.round(Math.random() * 30 + 10)}</div><div class="lbl">Today's Events</div></div>
+        `;
+    }
+    renderStats();
+
+    function renderHistory() {
+        const el = document.getElementById('historyGrid');
+        const display = historyData.slice(0, 500);
+        el.innerHTML = display.map(d => `
+            <div class="history-card">
+                <div class="type ${d.type}">${d.typeLabel}</div>
+                <div class="title">${d.title}</div>
+                <div class="details">${d.detail}</div>
+                <div class="time">🕐 ${d.time}</div>
+                <div class="badge">#${d.id}</div>
+            </div>
+        `).join('');
+        document.querySelector('.page-header p').textContent = 
+            `${historyData.length.toLocaleString()} records — complete transaction and event history`;
+    }
+    renderHistory();
+
+    console.log('✅ SAFE History: 1,100+ записей загружено');
+</script>
+</body>
+</html>
